@@ -31,6 +31,11 @@ public class MainController {
         return mv;
     }
 
+    @RequestMapping("/admin-dash")
+    public String getAdminDashBoard(){
+        return "admin_dash";
+    }
+
 
     @RequestMapping("/e")
     public String showErrorPage()throws Exception{
