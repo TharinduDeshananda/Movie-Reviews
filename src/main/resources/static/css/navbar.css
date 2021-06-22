@@ -16,4 +16,18 @@
       text-align:center;
     }
 
+    #log-bar{
+        position:absolute;
+        bottom:2px;
+        right:2px;
+        display:flex;
+        flex-direction:row;
+        justify-content:flex-end;
+        align-items:center;
+        color:white;
+    }
 
+    #signin-bt {color:white; display:inline-block; padding:5px; margin:5px;}
+    #singup-bt {color:white; display:inline-block; padding:5px; margin:5px;}
+    #signin-bt  a {color:white}
+    #signup-bt  a {color:white}
