@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Indie+Flower&family=Permanent+Marker&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="/css/img-gallery.css">
+    <link rel="stylesheet" href="/css/navbar.css">
+    <link rel="stylesheet" href="/css/back-to-top-button.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/css/search-bar.css">
+    <style>
+    body {
+      margin: 0;
+      background-color: #f1f1f1;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+    #main-body  {
+      max-width: 90%;
+      background-color: lavender;
+      min-height: 100vh;
+      margin: 0px auto;
+    }
+    #footer {
+          background-color: #2E4053;
+          text-align: center;
+          color: white;
+          padding: 20px 10px;
+        }
+
+
+  </style>
+</head>
+<body>
+
+
+<div id="navbar">
+    <div class="mainTitle">MOVIE REVIEWS</div>
+    <div></div>
+</div>
+
+
+<div id="main-body">
+
+    <button onclick="topFunction()" id="toup" title="Go to top">Top</button>
+
+    <div id="search-bar">
+        <form class="example" action="">
+            <input type="text" placeholder="Search.." name="search">
+            <button type="submit"><i class="fa fa-search"></i></button>
+        </form>
+    </div>
+    <div id="tag-bar"></div>
+
+    <div>Recently Added..</div>
+
+    <div id="poster-container">
+
+        <div class="gallery">
+            <a target="_blank" href="">
+                <img src="https://images.indianexpress.com/2019/07/the-lord-of-the-rings-1200.jpg" alt="Cinque Terre" width="600" height="400">
+            </a>
+            <div class="desc">Add a description of the image here</div>
+        </div>
+
+        <div class="gallery">
+            <a target="_blank" href="">
+                <img src="https://images.indianexpress.com/2019/07/the-lord-of-the-rings-1200.jpg" alt="Cinque Terre" width="600" height="400">
+            </a>
+            <div class="desc">Add a description of the image here</div>
+        </div>
+
+        <div class="gallery">
+            <a target="_blank" href="">
+                <img src="https://images.indianexpress.com/2019/07/the-lord-of-the-rings-1200.jpg" alt="Cinque Terre" width="600" height="400">
+            </a>
+            <div class="desc">Add a description of the image here</div>
+        </div>
+
+        <div class="gallery">
+            <a target="_blank" href="">
+                <img src="https://images.indianexpress.com/2019/07/the-lord-of-the-rings-1200.jpg" alt="Cinque Terre" width="600" height="400">
+            </a>
+            <div class="desc">Add a description of the image here</div>
+        </div>
+
+        <div class="gallery">
+            <a target="_blank" href="">
+                <img src="https://images.indianexpress.com/2019/07/the-lord-of-the-rings-1200.jpg" alt="Cinque Terre" width="600" height="400">
+            </a>
+            <div class="desc">Add a description of the image here</div>
+        </div>
+
+        <div class="gallery">
+            <a target="_blank" href="">
+                <img src="https://images.indianexpress.com/2019/07/the-lord-of-the-rings-1200.jpg" alt="Cinque Terre" width="600" height="400">
+            </a>
+            <div class="desc">Add a description of the image here</div>
+        </div>
+
+    </div>
+
+</div>
+<div id="footer">
+    Moview reviews footer
+</div>
+
+
+
+
+</body>
+</html>
+<script>
+    var prevScrollpos = window.pageYOffset;
+    window.onscroll = function() {
+      var currentScrollPos = window.pageYOffset;
+      if (prevScrollpos > currentScrollPos) {
+        document.getElementById("navbar").style.top = "0";
+      } else {
+        document.getElementById("navbar").style.top = "-150px";
+      }
+      prevScrollpos = currentScrollPos;
+    }
+  </script>
+<script type="text/javascript">
+    var slideIndex = 0;
+showSlides();
+
+function showSlides() {
+  var i;
+  var slides = document.getElementsByClassName("mySlides");
+  for (i = 0; i < slides.length; i++) {
+    slides[i].style.display = "none";
+  }
+  slideIndex++;
+  if (slideIndex > slides.length) {slideIndex = 1}
+  slides[slideIndex-1].style.display = "block";
+
+  setTimeout(showSlides, 2000); // Change image every 2 seconds
+}
+  </script>
+<script>
+//Get the button
+var mybutton = document.getElementById("toup");
+
+// When the user scrolls down 20px from the top of the document, show the button
+window.onscroll = function() {scrollFunction()};
+
+function scrollFunction() {
+  if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+    mybutton.style.display = "block";
+  } else {
+    mybutton.style.display = "none";
+  }
+}
+
+// When the user clicks on the button, scroll to the top of the document
+function topFunction() {
+  document.body.scrollTop = 0;
+  document.documentElement.scrollTop = 0;
+}
+</script>

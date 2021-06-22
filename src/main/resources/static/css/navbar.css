@@ -1,0 +1,19 @@
+#navbar {
+      background-color: #333;
+      position: sticky;
+      top: 0;
+      width: 100%;
+      padding:30px;
+      margin:0px 0px 0px 0px;
+      display: block;
+      transition: top 0.3s;
+    }
+    #navbar .mainTitle {
+      color:white;
+      font-family: 'Permanent Marker', cursive;
+      letter-spacing: 15px;
+      font-size:64px;
+      text-align:center;
+    }
+
+

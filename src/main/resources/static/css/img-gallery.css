@@ -1,0 +1,29 @@
+#poster-container {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    div.gallery {
+      margin: 5px;
+      border: 1px solid #ccc;
+      float: left;
+      width: 360px;
+    }
+
+    div.gallery:hover {
+      border: 1px solid #777;
+    }
+
+    div.gallery img {
+      width: 100%;
+      height: auto;
+    }
+
+    div.desc {
+      padding: 5px;
+      text-align: center;
+    }
+
+
+    img {vertical-align: middle;}
