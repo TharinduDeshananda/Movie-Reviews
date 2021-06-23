@@ -1,5 +1,6 @@
 package TDZilla.MovieReviews;
 
+import org.bson.types.Binary;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -17,6 +18,7 @@ public class MoviePost {
     private Date movieYear;
     private Date postDate;
     private Date lastEdited;
+    private ArrayList<Binary> binaryPics = new ArrayList<>();
     private ArrayList<String> picIdsList = new ArrayList<>();
     private ArrayList<String> movieTags = new ArrayList<>();
     private ArrayList<UserComment> userComments = new ArrayList<>();
@@ -25,7 +27,7 @@ public class MoviePost {
     }
 
     public MoviePost(String postName, String movieName, String editorName, String postContent,
-                     Date movieYear, Date postDate, Date lastEdited,
+                     Date movieYear, Date postDate, Date lastEdited,ArrayList<Binary> binaryPics,
                      ArrayList<String> picIdsList, ArrayList<String> movieTags,
                      ArrayList<UserComment> userComments) {
         this.postName = postName;
@@ -35,9 +37,18 @@ public class MoviePost {
         this.movieYear = movieYear;
         this.postDate = postDate;
         this.lastEdited = lastEdited;
+        this.binaryPics = binaryPics;
         this.picIdsList = picIdsList;
         this.movieTags = movieTags;
         this.userComments = userComments;
+    }
+
+    public ArrayList<Binary> getBinaryPics() {
+        return binaryPics;
+    }
+
+    public void setBinaryPics(ArrayList<Binary> binaryPics) {
+        this.binaryPics = binaryPics;
     }
 
     public String getId() {
