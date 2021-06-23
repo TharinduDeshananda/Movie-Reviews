@@ -13,6 +13,7 @@ public class MoviePost {
     private String postName;
     private String movieName;
     private String editorName;
+    private String postContent;
     private Date movieYear;
     private Date postDate;
     private Date lastEdited;
@@ -23,13 +24,14 @@ public class MoviePost {
     public MoviePost() {
     }
 
-    public MoviePost(String postName, String movieName, String editorName,
+    public MoviePost(String postName, String movieName, String editorName, String postContent,
                      Date movieYear, Date postDate, Date lastEdited,
                      ArrayList<String> picIdsList, ArrayList<String> movieTags,
                      ArrayList<UserComment> userComments) {
         this.postName = postName;
         this.movieName = movieName;
         this.editorName = editorName;
+        this.postContent = postContent;
         this.movieYear = movieYear;
         this.postDate = postDate;
         this.lastEdited = lastEdited;
@@ -64,6 +66,14 @@ public class MoviePost {
 
     public String getEditorName() {
         return editorName;
+    }
+
+    public String getPostContent() {
+        return postContent;
+    }
+
+    public void setPostContent(String postContent) {
+        this.postContent = postContent;
     }
 
     public void setEditorName(String editorName) {
