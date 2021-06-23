@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title></title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://cdn.rawgit.com/harvesthq/chosen/gh-pages/chosen.jquery.min.js"></script>
+    <link href="https://cdn.rawgit.com/harvesthq/chosen/gh-pages/chosen.min.css" rel="stylesheet"/>
+    <style type="text/css">
+  #editor-container {}
+  #editor-bar {display: flex; justify-content: center; align-items: center; flex-wrap: wrap;}
+  #editor-bar * {padding: 5px; margin: 5px;}
+  #editor-bar *:hover {padding: 5px; margin: 5px; cursor: pointer;}
+  .editor-bar-item  {padding: 5px color: white; margin: 5px; background-color: darkslateblue;}
+  #editor {min-height: 50vh; background-color: lavender; padding: 20px 30px;}
+  input[type=text]  {width: 80%; padding: 10px;}
+  input {
+    font-size: 18px;
+  }
+
+
+  </style>
+</head>
+<body>
+<form enctype="multipart/form-data" action="create_post_form_data" id="form1">
+    <input type="submit" name="submit" style="width: 60%; margin:auto;" value="Submit Post"><br><br>
+
+    <textarea id="hiddenText" name = "postContent" style="display: inline-block;"></textarea>
+
+
+    <label for="movieName">Movie Name</label><br>
+    <input type="text" name="movieName"><br><br>
+
+    <label for="movieYear">Movie Year</label><br>
+    <input type="number" min="1900" max="2099" step="1" value="2016" /><br><br>
+
+    <label for="postName">Post Name</label><br>
+    <input type="text" name="postName"><br><br>
+
+    <label for="moviePics">Movie Pictures</label><br>
+    <input type="file" name="moviePics" multiple="1"><br><br>
+
+    <label for="tags">Choose tags:</label><br>
+    <select data-placeholder="Begin typing a Tag Name to filter..." multiple class="chosen-select" name="tags" style="height: 36px;
+  font-size: 14px; width: 80%;">
+        <option value="action">Action</option>
+        <option value="adventure">Adventure</option>
+        <option value="animation">Animation</option>
+        <option value="comedy">Comedy</option>
+        <option value="documentary">Documentary</option>
+        <option value="family">Family</option>
+        <option value="scienceFiction">Science Fiction</option>
+        <option value="crime">Crime</option>
+        <option value="drama">Drama</option>
+        <option value="fantasy">Fantasy</option>
+        <option value="halloween">Halloween</option>
+        <option value="horror">Horror</option>
+        <option value="history">History</option>
+        <option value="music">Music</option>
+        <option value="mystery">Mystery</option>
+        <option value="romance">Romance</option>
+        <option value="thriller">Thriller</option>
+        <option value="war">War</option>
+        <option value="sport">Sport</option>
+
+    </select>
+</form>
+
+
+<br><br><br><br>
+<div id="editor-container">
+    <div id="editor-bar">
+        <button id="bt-bold">bold</button>
+        <button id="bt-italic">italic</button>
+        <button id="bt-underline">underline</button>
+        <button id="bt-sup">sup</button>
+        <button id="bt-sub">sub</button>
+        <button id="bt-ol">Ordered List</button>
+        <button id="bt-ul">unordered List</button>
+        <select id="font-size" name="font-size">
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4" selected="">4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+            <option value="7">7</option>
+        </select>
+        <select id="fonts" name="fonts">
+            <option value="Arial">Arial</option>
+            <option value="Helvetica">Helvetica</option>
+            <option value="Times New Roman">Times New Roman</option>
+            <option value="Sans serif">Sans serif</option>
+            <option value="Courier New">Courier New</option>
+            <option value="Verdana">Verdana</option>
+            <option value="Georgia">Georgia</option>
+            <option value="Palatino">Palatino</option>
+            <option value="Garamond">Garamond</option>
+            <option value="Comic Sans MS">Comic Sans MS</option>
+            <option value="Arial Black">Arial Black</option>
+            <option value="Tahoma">Tahoma</option>
+            <option value="Comic Sans MS">Comic Sans MS</option>
+        </select>
+        <button id="bt-center">Center</button>
+        <button id="bt-alignleft">Align Left</button>
+        <button id="bt-alignright">Align Right</button>
+        <button id="bt-justify">Justify</button>
+    </div>
+    <div id="editor" contenteditable="true"></div>
+    <div>
+        <button id="bt-done">Done</button>
+        <button id="bt-save">Save</button>
+        <button id="bt-cancel">Cancel</button>
+    </div>
+    <button id="printContent">print content</button>
+</div>
+</body>
+</html>
+<script type="text/javascript">
+let editor = document.getElementById("editor");
+let btSup = document.getElementById("bt-sup");
+let btSub = document.getElementById("bt-sub");
+let fontSize = document.getElementById("font-size");
+let btBold = document.getElementById("bt-bold");
+let btItalic = document.getElementById("bt-italic");
+let btUnderline = document.getElementById("bt-underline");
+let btCenter = document.getElementById("bt-center");
+let btAlignLeft = document.getElementById("bt-alignleft");
+let btAlignRight = document.getElementById("bt-alignright");
+let btJustify = document.getElementById("bt-justify");
+let btOrderedList = document.getElementById("bt-ol");
+let btUnorderedList = document.getElementById("bt-ul");
+let form1 = document.getElementById("form1");
+let hiddenText = document.getElementById("hiddenText");
+
+form1.onsubmit = (event)=>{
+  hiddenText.value = editor.innerHTML;
+  return false;
+};
+
+editor.onselect = (event)=>{
+  console.log(document.queryCommandState("fontSize"));
+  fontSize.value = document.queryCommandState("fontSize");
+
+};
+
+btSup.onclick=(event)=>{
+  document.execCommand("superscript");
+  console.log("changing sup....");
+};
+fontSize.onclick=(event)=>{
+  document.execCommand("subscript");
+  console.log("changing sub....");
+};
+
+
+fontSize.onchange=(event)=>{
+  document.execCommand("fontSize", false, event.target.value);
+  console.log("changing....");
+};
+
+btBold.onclick =(event)=>{
+  document.execCommand("bold",false);
+  console.log('bold changed');
+};
+
+btItalic.onclick =(event)=>{
+  document.execCommand("italic",false);
+  console.log('Italic changed');
+};
+
+btUnderline.onclick =(event)=>{
+  document.execCommand("underline",false);
+  console.log('Underline changed');
+};
+
+btCenter.onclick =(event)=>{
+  document.execCommand("justifyCenter",false);
+  console.log('justify center changed');
+};
+btAlignLeft.onclick =(event)=>{
+  document.execCommand("justifyLeft",false);
+  console.log('align left changed');
+};
+btAlignRight.onclick =(event)=>{
+  document.execCommand("justifyRight",false);
+  console.log('align right changed');
+};
+btJustify.onclick =(event)=>{
+  document.execCommand("justifyFull",false);
+  console.log('justify full changed');
+};
+
+btOrderedList.onclick = (event)=>{
+  document.execCommand("insertOrderedList",false);
+  console.log('Ordered list inserted');
+};
+btUnorderedList.onclick = (event)=>{
+  document.execCommand("insertUnorderedList",false);
+  console.log('unordered list inserted');
+};
+
+printContent.onclick = ()=>{
+  console.log(editor.innerHTML);
+};
+
+$(".chosen-select").chosen({
+  no_results_text: "Nothing found!"
+})
+</script>
