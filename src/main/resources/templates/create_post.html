@@ -22,7 +22,7 @@
   </style>
 </head>
 <body>
-<form enctype="multipart/form-data" action="create_post_form_data" id="form1">
+<form enctype="multipart/form-data" action="savePost" id="form1" method="POST">
     <input type="submit" name="submit" style="width: 60%; margin:auto;" value="Submit Post"><br><br>
 
     <textarea id="hiddenText" name = "postContent" style="display: inline-block;"></textarea>
@@ -32,17 +32,17 @@
     <input type="text" name="movieName"><br><br>
 
     <label for="movieYear">Movie Year</label><br>
-    <input type="number" min="1900" max="2099" step="1" value="2016" /><br><br>
+    <input type="number" min="1900" max="2099" step="1" value="2016" name="movieYear"/><br><br>
 
     <label for="postName">Post Name</label><br>
     <input type="text" name="postName"><br><br>
 
     <label for="moviePics">Movie Pictures</label><br>
-    <input type="file" name="moviePics" multiple="1"><br><br>
+    <input type="file" name="moviePics" multiple><br><br>
 
-    <label for="tags">Choose tags:</label><br>
-    <select data-placeholder="Begin typing a Tag Name to filter..." multiple class="chosen-select" name="tags" style="height: 36px;
-  font-size: 14px; width: 80%;">
+    <label for="movieTags">Choose tags:</label><br>
+    <select data-placeholder="Begin typing a Tag Name to filter..." class="chosen-select" name="movieTags" style="height: 36px;
+  font-size: 14px; width: 80%;" multiple>
         <option value="action">Action</option>
         <option value="adventure">Adventure</option>
         <option value="animation">Animation</option>
@@ -114,6 +114,7 @@
     </div>
     <button id="printContent">print content</button>
 </div>
+
 </body>
 </html>
 <script type="text/javascript">
@@ -135,7 +136,7 @@ let hiddenText = document.getElementById("hiddenText");
 
 form1.onsubmit = (event)=>{
   hiddenText.value = editor.innerHTML;
-  return false;
+  return true;
 };
 
 editor.onselect = (event)=>{
@@ -203,7 +204,6 @@ btUnorderedList.onclick = (event)=>{
 printContent.onclick = ()=>{
   console.log(editor.innerHTML);
 };
-
 $(".chosen-select").chosen({
   no_results_text: "Nothing found!"
 })

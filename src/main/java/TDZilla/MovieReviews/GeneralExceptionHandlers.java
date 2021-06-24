@@ -12,6 +12,7 @@ public class GeneralExceptionHandlers {
 
     @ExceptionHandler({})
     public ModelAndView handleExceptions(HttpServletRequest req, HttpServletResponse res,Exception ex){
+        ex.printStackTrace();
         ModelAndView mv = new ModelAndView();
         mv.addObject("exception",ex);
         mv.setViewName("error");

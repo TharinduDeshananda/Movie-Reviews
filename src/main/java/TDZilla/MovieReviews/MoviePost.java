@@ -13,11 +13,14 @@ public class MoviePost {
     private String id;
     private String postName;
     private String movieName;
+    private long like;
+    private long dislike;
     private String editorName;
     private String postContent;
-    private Date movieYear;
+    private long movieYear;
     private Date postDate;
     private Date lastEdited;
+
     private ArrayList<Binary> binaryPics = new ArrayList<>();
     private ArrayList<String> picIdsList = new ArrayList<>();
     private ArrayList<String> movieTags = new ArrayList<>();
@@ -27,7 +30,7 @@ public class MoviePost {
     }
 
     public MoviePost(String postName, String movieName, String editorName, String postContent,
-                     Date movieYear, Date postDate, Date lastEdited,ArrayList<Binary> binaryPics,
+                     long movieYear, Date postDate, Date lastEdited,ArrayList<Binary> binaryPics,
                      ArrayList<String> picIdsList, ArrayList<String> movieTags,
                      ArrayList<UserComment> userComments) {
         this.postName = postName;
@@ -41,6 +44,19 @@ public class MoviePost {
         this.picIdsList = picIdsList;
         this.movieTags = movieTags;
         this.userComments = userComments;
+    }
+
+    public void addToPicIdList(String id){
+        this.picIdsList.add(id);
+    }
+    public void addToBinaryPics(Binary pic){
+        this.binaryPics.add(pic);
+    }
+    public void addToMovieTags(String tag){
+        this.movieTags.add(tag);
+    }
+    public void addToUserComments(UserComment comment){
+        this.userComments.add(comment);
     }
 
     public ArrayList<Binary> getBinaryPics() {
@@ -91,11 +107,11 @@ public class MoviePost {
         this.editorName = editorName;
     }
 
-    public Date getMovieYear() {
+    public long getMovieYear() {
         return movieYear;
     }
 
-    public void setMovieYear(Date movieYear) {
+    public void setMovieYear(long movieYear) {
         this.movieYear = movieYear;
     }
 
@@ -137,5 +153,21 @@ public class MoviePost {
 
     public void setUserComments(ArrayList<UserComment> userComments) {
         this.userComments = userComments;
+    }
+
+    public long getLike() {
+        return like;
+    }
+
+    public void setLike(long like) {
+        this.like = like;
+    }
+
+    public long getDislike() {
+        return dislike;
+    }
+
+    public void setDislike(long dislike) {
+        this.dislike = dislike;
     }
 }
