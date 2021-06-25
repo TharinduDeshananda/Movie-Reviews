@@ -8,6 +8,7 @@
 
     <link rel="stylesheet" href="/css/img-gallery.css">
     <link rel="stylesheet" href="/css/navbar.css">
+    <link rel="stylesheet" href="/css/pagination.css">
     <link rel="stylesheet" href="/css/back-to-top-button.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="/css/search-bar.css">
@@ -39,9 +40,9 @@
 <div id="navbar">
     <div class="mainTitle">MOVIE REVIEWS</div>
     <div id="log-bar">
-        <div id="admin-dash"><a href="admin-dash">Admin Dashboard</a></div>
-        <div id="signin-bt"><a href="signin">Sign In</a></div>
-        <div id="signup-bt"><a href="signup">Sign Up</a></div>
+        <div id="admin-dash"><a href="/admin-dash">Admin Dashboard</a></div>
+        <div id="signin-bt"><a href="/signin">Sign In</a></div>
+        <div id="signup-bt"><a href="/signup">Sign Up</a></div>
 
     </div>
     <div id="tag-bar">
@@ -71,7 +72,18 @@
 
 
 <div id="main-body">
-
+    <div class="pagination">
+        <a th:href="@{/firstPage/{pageId}(pageId=${currentPage-1})}" th:if="${currentPage!=1}">&laquo;</a>
+        <a th:href="@{/firstPage/{pageId}(pageId=${1})}" th:if="${currentPage!=1}">First</a>
+        <a th:href="@{/firstPage/{pageId}(pageId=${currentPage-1})}" th:if="${currentPage!=1}"><span th:text="${currentPage-1}"/></a>
+        <a th:href="@{/firstPage/{pageId}(pageId=${currentPage})}" class="active"><span th:text="${currentPage}"/></a>
+        <a th:href="@{/firstPage/{pageId}(pageId=${currentPage+1})}" th:if="${currentPage+1<=pageCount}"><span th:text="${currentPage+1}"/></a>
+        <a th:href="@{/firstPage/{pageId}(pageId=${currentPage+2})}" th:if="${currentPage+2<=pageCount}"><span th:text="${currentPage+2}"/></a>
+        <a th:href="@{/firstPage/{pageId}(pageId=${currentPage+3})}" th:if="${currentPage+3<=pageCount}"><span th:text="${currentPage+3}"/></a>
+        <a th:href="@{/firstPage/{pageId}(pageId=${currentPage+1})}" th:if="${currentPage+1<=pageCount}">Next</a>
+        <a th:href="@{/firstPage/{pageId}(pageId=${pageCount})}">Last</a>
+        <a th:href="@{/firstPage/{pageId}(pageId=${currentPage+1})}" th:if="${currentPage+1<=pageCount}">&raquo;</a>
+    </div>
     <button onclick="topFunction()" id="toup" title="Go to top">Top</button>
 
     <div id="search-bar">
@@ -92,7 +104,7 @@
 
         <div th:each="post:${posts}">
             <div class="gallery">
-                <a target="_blank" th:href="@{/getPost/{pid}(pid = ${post.postId})}">
+                <a th:href="@{/getPost/{pid}(pid = ${post.postId})}">
                     <img th:src="*{'data:image/png;base64,'+post.picContent}" alt="Cinque Terre" style="object-fit: contain;">
                 </a>
                 <div class="desc">

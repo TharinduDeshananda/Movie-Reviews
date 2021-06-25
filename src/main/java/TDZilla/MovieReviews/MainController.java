@@ -1,10 +1,12 @@
 package TDZilla.MovieReviews;
 
+
 import org.bson.BsonBinarySubType;
 import org.bson.types.Binary;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
@@ -13,19 +15,38 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.view.RedirectView;
 
+import java.awt.print.Pageable;
 import java.util.*;
 
 @Controller
 public class MainController {
-
+    final int POSTS_PER_PAGE=2;
     @Autowired
     @Qualifier("cmongoTemplate")
     MongoTemplate template;
 
     @RequestMapping("/")
-    public String getIndex(Model model){
-        List<MoviePost> posts = template.findAll(MoviePost.class);
+    public RedirectView firstPAge(){
+
+        return new RedirectView("/firstPage/"+1);
+    }
+
+    @RequestMapping("/firstPage/{pageId}")
+    public String getIndex(@PathVariable(value = "pageId",required = false)Integer pageId,Model model){
+        if(pageId==null)pageId=1;
+        PageRequest pageRequest = PageRequest.of(pageId-1,POSTS_PER_PAGE);
+        Query query = new Query();
+        query.with(pageRequest);
+        List<MoviePost> posts = template.find(query,MoviePost.class);
+        Query query2 = new Query();
+        long itemCount=template.count(query2,MoviePost.class);
+
+        long pageCount = itemCount/POSTS_PER_PAGE;
+        System.out.println("Page count: "+pageCount);
+
+
         List<MovieTemplate> postTemplates = new ArrayList<>();
         if(posts.size()>0){
             for(MoviePost post: posts){
@@ -46,6 +67,9 @@ public class MainController {
             }
         }
         model.addAttribute("posts",postTemplates);
+        model.addAttribute("itemCount",itemCount);
+        model.addAttribute("currentPage",pageId);
+        model.addAttribute("pageCount",pageCount);
         return "index";
     }
 
