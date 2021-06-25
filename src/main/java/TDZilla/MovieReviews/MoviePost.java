@@ -21,7 +21,7 @@ public class MoviePost {
     private Date postDate;
     private Date lastEdited;
 
-    private ArrayList<Binary> binaryPics = new ArrayList<>();
+    private ArrayList<String> binaryPics = new ArrayList<>();
     private ArrayList<String> picIdsList = new ArrayList<>();
     private ArrayList<String> movieTags = new ArrayList<>();
     private ArrayList<UserComment> userComments = new ArrayList<>();
@@ -30,7 +30,7 @@ public class MoviePost {
     }
 
     public MoviePost(String postName, String movieName, String editorName, String postContent,
-                     long movieYear, Date postDate, Date lastEdited,ArrayList<Binary> binaryPics,
+                     long movieYear, Date postDate, Date lastEdited,ArrayList<String> binaryPics,
                      ArrayList<String> picIdsList, ArrayList<String> movieTags,
                      ArrayList<UserComment> userComments) {
         this.postName = postName;
@@ -49,7 +49,7 @@ public class MoviePost {
     public void addToPicIdList(String id){
         this.picIdsList.add(id);
     }
-    public void addToBinaryPics(Binary pic){
+    public void addToBinaryPics(String pic){
         this.binaryPics.add(pic);
     }
     public void addToMovieTags(String tag){
@@ -59,11 +59,11 @@ public class MoviePost {
         this.userComments.add(comment);
     }
 
-    public ArrayList<Binary> getBinaryPics() {
+    public ArrayList<String> getBinaryPics() {
         return binaryPics;
     }
 
-    public void setBinaryPics(ArrayList<Binary> binaryPics) {
+    public void setBinaryPics(ArrayList<String> binaryPics) {
         this.binaryPics = binaryPics;
     }
 

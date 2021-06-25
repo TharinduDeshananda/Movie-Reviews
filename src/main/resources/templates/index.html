@@ -1,5 +1,6 @@
-<!DOCTYPE html>
-<html>
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="preconnect" href="https://fonts.gstatic.com">
@@ -85,53 +86,32 @@
 
     <div id="poster-container">
 
-        <div class="gallery">
-            <a target="_blank" href="">
-                <img src="https://images.indianexpress.com/2019/07/the-lord-of-the-rings-1200.jpg" alt="Cinque Terre" width="600" height="400">
-            </a>
-            <div class="desc">Add a description of the image here</div>
+        <div th:if="${posts.empty}">
+            <div>No Posts Availble</div>
         </div>
 
-        <div class="gallery">
-            <a target="_blank" href="">
-                <img src="https://images.indianexpress.com/2019/07/the-lord-of-the-rings-1200.jpg" alt="Cinque Terre" width="600" height="400">
-            </a>
-            <div class="desc">Add a description of the image here</div>
+        <div th:each="post:${posts}">
+            <div class="gallery">
+                <a target="_blank" th:href="@{/getPost/{pid}(pid = ${post.postId})}">
+                    <img th:src="*{'data:image/png;base64,'+post.picContent}" alt="Cinque Terre" style="object-fit: contain;">
+                </a>
+                <div class="desc">
+                    <div th:text="${post.movieName}"/>
+                    <div th:text="${post.movieDate}"/>
+                    <div>Likes: <span th:text="${post.likes}"/> Dislikes: <span th:text="${post.dislikes}"/></div>
+
+                </div>
+            </div>
+
         </div>
 
-        <div class="gallery">
-            <a target="_blank" href="">
-                <img src="https://images.indianexpress.com/2019/07/the-lord-of-the-rings-1200.jpg" alt="Cinque Terre" width="600" height="400">
-            </a>
-            <div class="desc">Add a description of the image here</div>
-        </div>
 
-        <div class="gallery">
-            <a target="_blank" href="">
-                <img src="https://images.indianexpress.com/2019/07/the-lord-of-the-rings-1200.jpg" alt="Cinque Terre" width="600" height="400">
-            </a>
-            <div class="desc">Add a description of the image here</div>
-        </div>
-
-        <div class="gallery">
-            <a target="_blank" href="">
-                <img src="https://images.indianexpress.com/2019/07/the-lord-of-the-rings-1200.jpg" alt="Cinque Terre" width="600" height="400">
-            </a>
-            <div class="desc">Add a description of the image here</div>
-        </div>
-
-        <div class="gallery">
-            <a target="_blank" href="">
-                <img src="https://images.indianexpress.com/2019/07/the-lord-of-the-rings-1200.jpg" alt="Cinque Terre" width="600" height="400">
-            </a>
-            <div class="desc">Add a description of the image here</div>
-        </div>
 
     </div>
 
 </div>
 <div id="footer">
-    Moview reviews footer
+    Movie Reviews footer
 </div>
 
 
