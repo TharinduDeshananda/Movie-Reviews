@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.query.BasicQuery;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Controller;
@@ -31,6 +32,43 @@ public class MainController {
     public RedirectView firstPAge(){
 
         return new RedirectView("/firstPage/"+1);
+    }
+
+    @RequestMapping("/tagPosts/{tag}/{pageNum}")
+    public String getPostsByTag(@PathVariable("tag")String tag,@PathVariable("pageNum")int pageNum,Model model){
+
+        PageRequest pageRequest = PageRequest.of(pageNum-1,POSTS_PER_PAGE);
+        Query query = new Query(Criteria.where("movieTags").is(tag));
+        long itemCount = template.count(query,MoviePost.class);
+        long pageCount = itemCount/POSTS_PER_PAGE;
+        query.with(pageRequest);
+        List<MoviePost> posts = template.find(query,MoviePost.class);
+        List<MovieTemplate> postTemplates = new ArrayList<>();
+        if(posts.size()>0){
+            for(MoviePost post: posts){
+                MovieTemplate ptemplate = new MovieTemplate();
+                ptemplate.setMovieName(post.getMovieName());
+                ptemplate.setMovieDate(post.getMovieYear());
+                ptemplate.setPostId(post.getId());
+                ptemplate.setLikes(post.getLike());
+                ptemplate.setDislikes(post.getDislike());
+                String pic_id;
+                if(post.getPicIdsList().size()>0){
+                    pic_id = post.getPicIdsList().get(0);
+                    MoviePicture pic = template.findById(new ObjectId(pic_id),MoviePicture.class);
+                    ptemplate.setPicContent(Base64.getEncoder().encodeToString(pic.getPicContent().getData()));
+                }
+
+                postTemplates.add(ptemplate);
+            }
+        }
+
+        model.addAttribute("posts",postTemplates);
+        model.addAttribute("itemCount",itemCount);
+        model.addAttribute("currentPage",pageNum);
+        model.addAttribute("pageCount",pageCount);
+        model.addAttribute("currentTag",tag);
+        return "tagPosts";
     }
 
     @RequestMapping("/firstPage/{pageId}")

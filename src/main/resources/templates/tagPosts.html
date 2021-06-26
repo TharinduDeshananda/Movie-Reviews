@@ -72,17 +72,17 @@
 
 
 <div id="main-body">
-    <div class="pagination">
-        <a th:href="@{/firstPage/{pageId}(pageId=${currentPage-1})}" th:if="${currentPage!=1}">&laquo;</a>
-        <a th:href="@{/firstPage/{pageId}(pageId=${1})}" th:if="${currentPage!=1}">First</a>
-        <a th:href="@{/firstPage/{pageId}(pageId=${currentPage-1})}" th:if="${currentPage!=1}"><span th:text="${currentPage-1}"/></a>
-        <a th:href="@{/firstPage/{pageId}(pageId=${currentPage})}" class="active"><span th:text="${currentPage}"/></a>
-        <a th:href="@{/firstPage/{pageId}(pageId=${currentPage+1})}" th:if="${currentPage+1<=pageCount}"><span th:text="${currentPage+1}"/></a>
-        <a th:href="@{/firstPage/{pageId}(pageId=${currentPage+2})}" th:if="${currentPage+2<=pageCount}"><span th:text="${currentPage+2}"/></a>
-        <a th:href="@{/firstPage/{pageId}(pageId=${currentPage+3})}" th:if="${currentPage+3<=pageCount}"><span th:text="${currentPage+3}"/></a>
-        <a th:href="@{/firstPage/{pageId}(pageId=${currentPage+1})}" th:if="${currentPage+1<=pageCount}">Next</a>
-        <a th:href="@{/firstPage/{pageId}(pageId=${pageCount})}">Last</a>
-        <a th:href="@{/firstPage/{pageId}(pageId=${currentPage+1})}" th:if="${currentPage+1<=pageCount}">&raquo;</a>
+    <div class="pagination" th:if="${pageCount!=0}">
+        <a th:href="@{/tagPosts/{tag}/{pageNum}(pageNum=${currentPage-1},tag=${currentTag})}" th:if="${currentPage!=1}">&laquo;</a>
+        <a th:href="@{/tagPosts/{tag}/{pageNum}(pageNum=${1},tag=${currentTag})}" th:if="${currentPage!=1}">First</a>
+        <a th:href="@{/tagPosts/{tag}/{pageNum}(pageNum=${currentPage-1},tag=${currentTag})}" th:if="${currentPage!=1}"><span th:text="${currentPage-1}"/></a>
+        <a th:href="@{/tagPosts/{tag}/{pageNum}(pageNum=${currentPage},tag=${currentTag})}" class="active"><span th:text="${currentPage}"/></a>
+        <a th:href="@{/tagPosts/{tag}/{pageNum}(pageNum=${currentPage+1},tag=${currentTag})}" th:if="${currentPage+1<=pageCount}"><span th:text="${currentPage+1}"/></a>
+        <a th:href="@{/tagPosts/{tag}/{pageNum}(pageNum=${currentPage+2},tag=${currentTag})}" th:if="${currentPage+2<=pageCount}"><span th:text="${currentPage+2}"/></a>
+        <a th:href="@{/tagPosts/{tag}/{pageNum}(pageNum=${currentPage+3},tag=${currentTag})}" th:if="${currentPage+3<=pageCount}"><span th:text="${currentPage+3}"/></a>
+        <a th:href="@{/tagPosts/{tag}/{pageNum}(pageNum=${currentPage+1},tag=${currentTag})}" th:if="${currentPage+1<=pageCount}">Next</a>
+        <a th:href="@{/tagPosts/{tag}/{pageNum}(pageNum=${pageCount},tag=${currentTag})}">Last</a>
+        <a th:href="@{/tagPosts/{tag}/{pageNum}(pageNum=${currentPage+1},tag=${currentTag})}" th:if="${currentPage+1<=pageCount}">&raquo;</a>
     </div>
     <button onclick="topFunction()" id="toup" title="Go to top">Top</button>
 
