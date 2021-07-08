@@ -11,6 +11,7 @@ import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.BasicQuery;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -137,7 +138,7 @@ public class MainController {
 
     @RequestMapping("/getPost/{pid}")
     public String getPost(@PathVariable("pid")String pid, Model model){
-        System.out.println(pid+" =========");
+        System.out.println(pid+" ========= ffffff");
         MoviePost post = template.findById(new ObjectId(pid),MoviePost.class);
         if(post==null){return "index";}
         ArrayList<String> picIdsList = post.getPicIdsList();
@@ -148,6 +149,20 @@ public class MainController {
 
         model.addAttribute("post",post);
         return "post";
+    }
+
+    @RequestMapping("/postComment")
+    @ResponseBody
+    @ResponseStatus(HttpStatus.OK)
+    public String postComment(@RequestBody PostComment comment){
+        UserComment userComment = new UserComment(comment.getUserName(),comment.getComment(),comment.getDate());
+        System.out.println("------"+comment.getPid()+"-----");
+        System.out.println("------"+comment.getUserName()+"-----");
+
+        MoviePost post=template.findById(new ObjectId(comment.getPid()),MoviePost.class);
+        post.getUserComments().add(userComment);
+        template.save(post);
+        return "Done posting comment";
     }
 
     @RequestMapping("/savePost")

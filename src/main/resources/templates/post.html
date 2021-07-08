@@ -76,6 +76,10 @@ img {vertical-align: middle; height:400px; object-fit: contain;}
 @media only screen and (max-width: 300px) {
   .text {font-size: 11px}
 }
+
+.new-comment {}
+.comment-bar  {}
+.comment-content {}
 </style>
 </head>
 <body>
@@ -89,25 +93,25 @@ img {vertical-align: middle; height:400px; object-fit: contain;}
 
     </div>
     <div id="tag-bar">
-        <div class="tag">Adventure</div>
-        <div class="tag">Action</div>
-        <div class="tag">Animation</div>
-        <div class="tag">Comedy</div>
-        <div class="tag">Documentary</div>
-        <div class="tag">Family</div>
-        <div class="tag">Science Fiction</div>
-        <div class="tag">Crime</div>
-        <div class="tag">Drama</div>
-        <div class="tag">Fantasy</div>
-        <div class="tag">Halloween</div>
-        <div class="tag">Horror</div>
-        <div class="tag">History</div>
-        <div class="tag">Music</div>
-        <div class="tag">Mystery</div>
-        <div class="tag">Romance</div>
-        <div class="tag">Thriller</div>
-        <div class="tag">War</div>
-        <div class="tag">Sport</div>
+        <div class="tag"><a href="/tagPosts/adventure/1">Adventure</a></div>
+        <div class="tag"><a href="/tagPosts/action/1">Action</a></div>
+        <div class="tag"><a href="/tagPosts/animation/1">Animation</a></div>
+        <div class="tag"><a href="/tagPosts/comedy/1">Comedy</a></div>
+        <div class="tag"><a href="/tagPosts/documentary/1">Documentary</a></div>
+        <div class="tag"><a href="/tagPosts/family/1">Family</a></div>
+        <div class="tag"><a href="/tagPosts/fiction/1">Science Fiction</a></div>
+        <div class="tag"><a href="/tagPosts/crime/1">Crime</a></div>
+        <div class="tag"><a href="/tagPosts/drama/1">Drama</a></div>
+        <div class="tag"><a href="/tagPosts/fantasy/1">Fantasy</a></div>
+        <div class="tag"><a href="/tagPosts/halloween/1">Halloween</a></div>
+        <div class="tag"><a href="/tagPosts/horror/1">Horror</a></div>
+        <div class="tag"><a href="/tagPosts/history/1">History</a></div>
+        <div class="tag"><a href="/tagPosts/music/1">Music</a></div>
+        <div class="tag"><a href="/tagPosts/mystery/1">Mystery</a></div>
+        <div class="tag"><a href="/tagPosts/romance/1">Romance</a></div>
+        <div class="tag"><a href="/tagPosts/thriller/1">Thriller</a></div>
+        <div class="tag"><a href="/tagPosts/war/1">War</a></div>
+        <div class="tag"><a href="/tagPosts/sport/1">Sport</a></div>
 
 
     </div>
@@ -123,8 +127,26 @@ img {vertical-align: middle; height:400px; object-fit: contain;}
 <div class="main_container">
     <h1><span th:text="${post.movieName}"/></h1>
     <div>Movie Year <span th:text="${post.movieYear}"/></div>
-    <div><span th:text="${post.postContent}"/></div>
+    <div><span th:utext="${post.postContent}"/></div>
     <div>Comments Section</div>
+    <div name="comment-frame" class="comment-frame">
+        <div class="pagination"></div>
+        <div class="add-comment">
+            <textarea id="comment-area"></textarea>
+            <button id="bt-clear">Clear</button>
+            <button id="bt-post">Post Comment</button>
+        </div>
+        <div id="user-comments">
+
+        </div>
+        <div th:each="mcomment:${post.userComments}">
+            <div th:text="${mcomment.userName}"></div>
+            <div th:text="${mcomment.comment}"></div>
+            <div th:text="${mcomment.commentDate}"></div>
+        </div>
+
+    </div>
+
 </div>
 <div id="footer">
     Movie Reviews footer
@@ -147,6 +169,85 @@ function showSlides() {
   setTimeout(showSlides, 2000); // Change image every 2 seconds
 }
 </script>
+<script th:inline="javascript">
+/*<![CDATA[*/
 
+
+    let pd = [[${post.id}]];
+    console.log(pd);
+
+/*]]>*/
+</script>
 </body>
 </html>
+
+
+
+<script type="text/javascript">
+  let btPost = document.getElementById('bt-post');
+  let btClear = document.getElementById('bt-clear');
+  let commentArea = document.getElementById('comment-area');
+  let userComments = document.getElementById('user-comments');
+
+  btPost.onclick = async (event)=>{
+
+    let newComment = document.createElement('div');
+    let commentBar = document.createElement('div');
+    let commentContent = document.createElement('div');
+    newComment.className = "new-comment";
+    commentBar.className = "comment-bar";
+    commentContent.className = "comment-content";
+    commentContent.textContent = commentArea.value;
+    let date = new Date();
+    let cobj={userName:"An User",comment:commentArea.value,date:date,pid:pd};
+    commentBar.textContent = "An User "+`${date.getFullYear()}  ${date.getMonth()+1}`
+    let res = await fetch("/postComment",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(cobj)});
+    if(!res.status){
+        window.alert("Error posting comment");
+        return;
+    }
+
+    newComment.appendChild(commentBar);
+    newComment.appendChild(commentContent);
+    userComments.insertAdjacentElement('afterbegin', newComment);
+    console.log('comment added');
+};
+
+
+
+
+
+</script>
+<script type="text/javascript">
+
+  function timeSince(date) {
+
+  let seconds = Math.floor((new Date() - date) / 1000);
+
+  let interval = seconds / 31536000;
+
+  if (interval > 1) {
+    return Math.floor(interval) + " years";
+  }
+  interval = seconds / 2592000;
+  if (interval > 1) {
+    return Math.floor(interval) + " months";
+  }
+  interval = seconds / 86400;
+  if (interval > 1) {
+    return Math.floor(interval) + " days";
+  }
+  interval = seconds / 3600;
+  if (interval > 1) {
+    return Math.floor(interval) + " hours";
+  }
+  interval = seconds / 60;
+  if (interval > 1) {
+    return Math.floor(interval) + " minutes";
+  }
+  return Math.floor(seconds) + " seconds";
+}
+
+</script>
+
+
