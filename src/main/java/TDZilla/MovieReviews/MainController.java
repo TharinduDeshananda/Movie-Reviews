@@ -24,7 +24,7 @@ import java.util.*;
 
 @Controller
 public class MainController {
-    final int POSTS_PER_PAGE=2;
+    final int POSTS_PER_PAGE=5;
     @Autowired
     @Qualifier("cmongoTemplate")
     MongoTemplate template;
@@ -41,7 +41,7 @@ public class MainController {
         PageRequest pageRequest = PageRequest.of(pageNum-1,POSTS_PER_PAGE);
         Query query = new Query(Criteria.where("movieTags").is(tag));
         long itemCount = template.count(query,MoviePost.class);
-        long pageCount = itemCount/POSTS_PER_PAGE;
+        long pageCount = (itemCount/POSTS_PER_PAGE)+1;
         query.with(pageRequest);
         List<MoviePost> posts = template.find(query,MoviePost.class);
         List<MovieTemplate> postTemplates = new ArrayList<>();
@@ -82,7 +82,7 @@ public class MainController {
         Query query2 = new Query();
         long itemCount=template.count(query2,MoviePost.class);
 
-        long pageCount = itemCount/POSTS_PER_PAGE;
+        long pageCount = (itemCount/POSTS_PER_PAGE)+1;
         System.out.println("Page count: "+pageCount);
 
 
@@ -135,6 +135,39 @@ public class MainController {
     public String getCreatePost(Model model){
         return "create_post";
     }
+
+    @RequestMapping("/update_post/{postId}")
+    public String updatePost(@PathVariable("postId")String pid,Model model)throws Exception{
+        System.out.println(pid+" ========= ffffff");
+        MoviePost post = template.findById(new ObjectId(pid),MoviePost.class);
+        if(post==null){throw new Exception("Movie Post not found");}
+        ArrayList<String> picIdsList = post.getPicIdsList();
+        for(String picID:picIdsList){
+            MoviePicture picObj = template.findById(new ObjectId(picID),MoviePicture.class);
+            post.addToBinaryPics(Base64.getEncoder().encodeToString(picObj.getPicContent().getData()));
+        }
+
+        model.addAttribute("post",post);
+        return "update_post";
+    }
+
+    @RequestMapping("/remove_post/{pid}")
+    public String removePost(@PathVariable String pid)throws Exception{
+        System.out.println(pid+" ========= removing post");
+        MoviePost post = template.findById(new ObjectId(pid),MoviePost.class);
+        if(post==null){throw new Exception("Movie Post not found");}
+        ArrayList<String> picIdsList = post.getPicIdsList();
+        for(String picID:picIdsList){
+            template.remove(new Query(Criteria.where("id").is(picID)), MoviePicture.class);
+
+        }
+        template.remove(post);
+
+        return "forward:/";
+    }
+
+
+
 
     @RequestMapping("/getPost/{pid}")
     public String getPost(@PathVariable("pid")String pid, Model model){

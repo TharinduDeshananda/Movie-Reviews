@@ -22,10 +22,11 @@
   </style>
 </head>
 <body>
-<form enctype="multipart/form-data" action="savePost" id="form1" method="POST">
+<h2>Edit Post</h2>
+<form enctype="multipart/form-data" action="/" id="form1" method="POST">
     <input type="submit" name="submit" style="width: 60%; margin:auto;" value="Submit Post"><br><br>
 
-    <textarea id="hiddenText" name = "postContent" style="display: inline-block;"></textarea>
+    <textarea id="hiddenText" name = "postContent" style="display: none;"></textarea>
 
 
     <label for="movieName">Movie Name</label><br>
@@ -40,6 +41,11 @@
     <label for="moviePics">Movie Pictures</label><br>
     <input type="file" name="moviePics" multiple><br><br>
 
+    <div>Chosen Tags</div>
+    <span th:each="tag:${post.movieTags}" style="background-color:#2E4053; color:white; padding:4px; margin:4px;">
+        <span th:text="${tag}"></span>
+    </span>
+    <br>
     <label for="movieTags">Choose tags:</label><br>
     <select data-placeholder="Begin typing a Tag Name to filter..." class="chosen-select" name="movieTags" style="height: 36px;
   font-size: 14px; width: 80%;" multiple>
@@ -106,7 +112,7 @@
         <button id="bt-alignright">Align Right</button>
         <button id="bt-justify">Justify</button>
     </div>
-    <div id="editor" contenteditable="true"></div>
+    <div id="editor" contenteditable="true" th:utext="${post.postContent}"></div>
     <div>
         <button id="bt-done">Done</button>
         <button id="bt-save">Save</button>
