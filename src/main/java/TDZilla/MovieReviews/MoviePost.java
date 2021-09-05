@@ -170,4 +170,24 @@ public class MoviePost {
     public void setDislike(long dislike) {
         this.dislike = dislike;
     }
+
+    @Override
+    public String toString() {
+        return "MoviePost{" +
+                "id='" + id + '\'' +
+                ", postName='" + postName + '\'' +
+                ", movieName='" + movieName + '\'' +
+                ", like=" + like +
+                ", dislike=" + dislike +
+                ", editorName='" + editorName + '\'' +
+
+                ", movieYear=" + movieYear +
+                ", postDate=" + postDate +
+                ", lastEdited=" + lastEdited +
+                ", binaryPics=" + binaryPics +
+                ", picIdsList=" + picIdsList +
+                ", movieTags=" + movieTags +
+                ", userComments=" + userComments +
+                '}';
+    }
 }

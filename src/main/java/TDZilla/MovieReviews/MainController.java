@@ -151,6 +151,53 @@ public class MainController {
         return "update_post";
     }
 
+    @RequestMapping("/saveUpdatedPost/{postId}")
+    public String saveUpdatedPost(@PathVariable(value = "postId",required = false) String postId,@ModelAttribute MoviePost post,@RequestParam("moviePics") MultipartFile[] moviePics){
+
+        MoviePost existingPost = template.findById(new ObjectId(postId),MoviePost.class);
+        List<String> existingPicIds = existingPost.getPicIdsList();
+        for(String picId: existingPicIds){
+            MoviePicture pic = template.findById(new ObjectId(picId),MoviePicture.class);
+            template.remove(pic);
+
+        }
+
+        existingPost.getBinaryPics().clear();
+        existingPost.getPicIdsList().clear();
+
+        for(MultipartFile file : moviePics){
+            try{
+
+                if(file.isEmpty()){continue;}
+                MoviePicture pic = new MoviePicture();
+                pic.setMovieName("");
+                pic.setPicDate(new Date());
+                pic.setPicContent(new Binary(BsonBinarySubType.BINARY,file.getBytes()));
+                pic=template.save(pic);
+                existingPost.addToPicIdList(pic.getId());
+            }catch(Exception e){
+                System.out.println(e);
+            }
+        }
+
+        existingPost.setPostName(post.getPostName());
+        existingPost.setMovieName(post.getMovieName());
+        existingPost.setMovieYear(post.getMovieYear());
+        existingPost.setLastEdited(new Date());
+
+        existingPost.getMovieTags().clear();
+        existingPost.getMovieTags().addAll(post.getMovieTags());
+        existingPost.setPostContent(post.getPostContent());
+
+        template.save(existingPost);
+
+        System.out.println("movie post: "+post);
+        System.out.println("post id: "+postId);
+        return "forward:/getPost/"+postId;
+    }
+
+
+
     @RequestMapping("/remove_post/{pid}")
     public String removePost(@PathVariable String pid)throws Exception{
         System.out.println(pid+" ========= removing post");

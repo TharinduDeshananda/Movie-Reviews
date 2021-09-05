@@ -20,6 +20,7 @@ public class GeneralExceptionHandlers {
     @ExceptionHandler({})
     public ModelAndView handleExceptions(HttpServletRequest req, HttpServletResponse res,Exception ex){
         ex.printStackTrace();
+        System.out.println(ex);
         ModelAndView mv = new ModelAndView();
         mv.addObject("exception",ex);
         mv.setViewName("error");
