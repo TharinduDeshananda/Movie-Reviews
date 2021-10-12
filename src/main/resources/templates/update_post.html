@@ -141,6 +141,7 @@ let btOrderedList = document.getElementById("bt-ol");
 let btUnorderedList = document.getElementById("bt-ul");
 let form1 = document.getElementById("form1");
 let hiddenText = document.getElementById("hiddenText");
+let btFont = document.getElementById("fonts");
 
 form1.onsubmit = (event)=>{
   hiddenText.value = editor.innerHTML;
@@ -157,11 +158,14 @@ btSup.onclick=(event)=>{
   document.execCommand("superscript");
   console.log("changing sup....");
 };
-fontSize.onclick=(event)=>{
+btSub.onclick=(event)=>{
   document.execCommand("subscript");
   console.log("changing sub....");
 };
-
+btFont.onchange = (event)=>{
+    console.log("changing the font");
+    document.execCommand("fontName",false,event.target.value);
+};
 
 fontSize.onchange=(event)=>{
   document.execCommand("fontSize", false, event.target.value);
