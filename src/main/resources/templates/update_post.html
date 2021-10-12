@@ -31,16 +31,16 @@
     <textarea id="hiddenText" name = "postContent" style="display: none;"></textarea>
 
     <div th:text="${post.id}"></div>
-    <label for="movieName">Movie Name</label><br>
+    <label >Movie Name</label><br>
     <input type="text" name="movieName" th:value="${post.movieName}"><br><br>
 
-    <label for="movieYear">Movie Year</label><br>
+    <label >Movie Year</label><br>
     <input type="number" min="1900" max="2099" step="1" value="2016" name="movieYear" th:value="${post.movieYear}"/><br><br>
 
-    <label for="postName">Post Name</label><br>
+    <label >Post Name</label><br>
     <input type="text" name="postName" th:value="${post.postName}"><br><br>
 
-    <label for="moviePics">Movie Pictures</label><br>
+    <label >Movie Pictures</label><br>
     <input type="file" name="moviePics" multiple><br><br>
 
     <div>Chosen Tags</div>
@@ -48,7 +48,7 @@
         <span th:text="${tag}"></span>
     </span>
     <br>
-    <label for="movieTags">Choose tags:</label><br>
+    <label >Choose tags:</label><br>
     <select data-placeholder="Begin typing a Tag Name to filter..." class="chosen-select" name="movieTags" style="height: 36px;
   font-size: 14px; width: 80%;" multiple>
         <option value="action">Action</option>
